@@ -4,7 +4,7 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2025-01-10T12:32:35+01:00",
+    "exported_at": "2025-01-10T13:45:33+01:00",
     "name": "Next JS v1.0",
     "author": "ricardoneud2007@gmail.com",
     "description": "Host a Next.js application easily",
@@ -17,7 +17,7 @@
         "ghcr.io\/parkervcp\/yolks:nodejs_17": "ghcr.io\/parkervcp\/yolks:nodejs_17"
     },
     "file_denylist": [],
-    "startup": "cd \/home\/container && npm install && if [ \"${NODE_RUN_ENV}\" == \"dev\" ]; then npx next dev -p ${SERVER_PORT} -H 0.0.0.0; else npm run build && npx next start -p ${SERVER_PORT} -H 0.0.0.0; fi",
+    "startup": "cd \/home\/container && npm install && if [ \"${NODE_RUN_ENV}\" == \"dev\" ]; then npx next dev -p ${NEXT_SERVER_PORT} -H 0.0.0.0; else npm run build && npx next start -p ${NEXT_SERVER_PORT} -H 0.0.0.0; fi",
     "config": {
         "files": "{\r\n    \"next.config.js\": {\r\n        \"parser\": \"json\",\r\n        \"find\": {\r\n            \"env\": {\r\n                \"NODE_RUN_ENV\": \"{{NODE_RUN_ENV}}\",\r\n                \"PORT\": \"{{SERVER_PORT}}\"\r\n            }\r\n        }\r\n    }\r\n}",
         "startup": "{\r\n    \"done\": \"Compiled successfully\"\r\n}",
