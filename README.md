@@ -20,24 +20,6 @@ Host your **Next.js** application in no time with this Pterodactyl panel egg. Th
 | 🚧    | Beta         |
 | 👀    | Coming Soon  |
 
-## Supported Pterodactyl Versions
-
-| Pterodactyl Version  | Supported |
-|----------------------|-----------|
-| **Pterodactyl 1.10.x** | 🛑     |
-| **Pterodactyl 1.11.x** | ✅     |
-
-## Supported Node.js Versions
-
-| Node.js Version      | Supported |
-|----------------------|-----------|
-| **Node.js 16.x**     | ❌       |
-| **Node.js 17.x**     | ❓       |
-| **Node.js 18.x**     | ✅       |
-| **Node.js 19.x**     | ✅       |
-| **Node.js 20.x**     | ✅       |
-| **Node.js 21.x**     | ✅       |
-
 ## Stable Releases
 
 | All Releases         | Supported |
@@ -58,6 +40,24 @@ Host your **Next.js** application in no time with this Pterodactyl panel egg. Th
 | Beta Releases        | Supported |
 |----------------------|-----------|
 | **v1.2**             | 🔧       |
+
+## Supported Pterodactyl Versions
+
+| Pterodactyl Version  | Supported |
+|----------------------|-----------|
+| **Pterodactyl 1.10.x** | 🛑     |
+| **Pterodactyl 1.11.x** | ✅     |
+
+## Supported Node.js Versions
+
+| Node.js Version      | Supported |
+|----------------------|-----------|
+| **Node.js 16.x**     | ❌       |
+| **Node.js 17.x**     | ❓       |
+| **Node.js 18.x**     | ✅       |
+| **Node.js 19.x**     | ✅       |
+| **Node.js 20.x**     | ✅       |
+| **Node.js 21.x**     | ✅       |
 
 ## Installation
 
