@@ -4,7 +4,7 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2025-01-13T13:12:20+01:00",
+    "exported_at": "2025-01-13T14:02:15+01:00",
     "name": "Next JS v1.2",
     "author": "ricardoneud2007@gmail.com",
     "description": "Host a Next.js application easily",
@@ -17,11 +17,11 @@
         "ghcr.io\/parkervcp\/yolks:nodejs_17": "ghcr.io\/parkervcp\/yolks:nodejs_17"
     },
     "file_denylist": [],
-    "startup": "cd \/home\/container && if [ \"${AUTO_UPDATE}\" == \"1\" ] && [ ! -d \".git\" ]; then echo \"Auto-update is enabled. Pulling latest files from GitHub...\"; if [ -n \"${USERNAME}\" ] && [ -n \"${ACCESS_TOKEN}\" ]; then git config --global credential.helper store && echo \"https:\/\/${USERNAME}:${ACCESS_TOKEN}@$(echo ${GITHUB_URL} | sed -e 's|https:\/\/||')\" > ~\/.git-credentials; fi; git init && git remote add origin ${GITHUB_URL} && git fetch origin ${GIT_BRANCH} && git reset --hard origin\/${GIT_BRANCH}; fi && npm install && if [ \"${NODE_RUN_ENV}\" == \"dev\" ]; then npx next dev -p ${NEXT_SERVER_PORT} -H 0.0.0.0; else npm run build && npx next start -p ${NEXT_SERVER_PORT} -H 0.0.0.0 && echo -e \"===============================================\\n\ud83d\ude80 Support & Inquiries \ud83d\ude80\\n===============================================\\nFor support or inquiries, you can reach us at:\\nContact page: https:\/\/ricardoneud.com\/contact\\nEmail: info@ricardoneud.com\\nDiscord: https:\/\/discord.gg\/bYxSMhF6bD\\nSupport Tickets: https:\/\/billing.ricardoneud.com\/tickets\/create\\n===============================================\\n\ud83c\udf1f This egg was created and provided by Ricardoneud.com \ud83c\udf1f\\n\ud83d\udc96 Supporting this project will greatly help us continue improving and providing better services! \ud83d\udc96\\n===============================================\"; fi",
+    "startup": "cd \/home\/container && mkdir -p logs && if [ \"${AUTO_UPDATE}\" == \"1\" ] && [ ! -d \".git\" ]; then   echo -e \"Auto-update is enabled. Pulling latest files from GitHub...\" >> logs\/update.log   if [ -n \"${USERNAME}\" ] && [ -n \"${ACCESS_TOKEN}\" ]; then     git config --global credential.helper store     echo \"https:\/\/${USERNAME}:${ACCESS_TOKEN}@$(echo ${GITHUB_URL} | sed -e 's|https:\/\/||')\" > ~\/.git-credentials   fi   git init && git remote add origin ${GITHUB_URL} && git fetch origin ${GIT_BRANCH} && git reset --hard origin\/${GIT_BRANCH} >> logs\/update.log 2>&1 fi  if [ -f \"package.json\" ]; then   npm install -y --legacy-peer-deps >> logs\/npm_install.log 2>&1 else   echo \"No package.json found, skipping npm install.\" >> logs\/npm_install.log fi  if [ -f \"package.json\" ]; then   if [ \"${NODE_RUN_ENV}\" == \"dev\" ]; then     npx next dev -p ${NEXT_SERVER_PORT} -H 0.0.0.0 >> logs\/next_dev.log 2>&1   else     npm run build && npx next start -p ${NEXT_SERVER_PORT} -H 0.0.0.0 >> logs\/next_start.log 2>&1   fi else   echo \"Skipping Next.js start: No package.json found.\" >> logs\/next_start.log fi",
     "config": {
-        "files": "{\r\n    \"next.config.js\": {\r\n        \"parser\": \"json\",\r\n        \"find\": {\r\n            \"env\": {\r\n                \"NODE_RUN_ENV\": \"{{NODE_RUN_ENV}}\",\r\n                \"PORT\": \"{{NEXT_SERVER_PORT}}\"\r\n            }\r\n        }\r\n    }\r\n}",
+        "files": "{}",
         "startup": "{\r\n    \"done\": \"Compiled successfully\"\r\n}",
-        "logs": "{\r\n    \"log_dir\": \"\/home\/container\/logs\"\r\n}",
+        "logs": "{}",
         "stop": "^^C"
     },
     "scripts": {
