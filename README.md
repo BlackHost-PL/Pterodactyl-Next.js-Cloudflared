@@ -39,7 +39,7 @@ Host your **Next.js** application in no time with this Pterodactyl panel egg. Th
 
 | Pterodactyl Version  | Supported |
 |----------------------|-----------|
-| **Pterodactyl 1.10.x** | 🛑     |
+| **Pterodactyl 1.10.x** | ✅     |
 | **Pterodactyl 1.11.x** | ✅     |
 
 ## Supported Node.js Versions
