@@ -27,13 +27,12 @@ Host your **Next.js** application in no time with this Pterodactyl panel egg. Th
 | **v1.0**             | ❌       |
 | **v1.1**             | ✅       |
 | **v1.2**             | ✅       |
+| **v1.3**             | ✅       |
 
 ## Beta Releases
 
 | Beta Releases        | Supported |
 |----------------------|-----------|
-| **v1.3**             | 👀       |
-| **v1.4**             | 👀       |
 
 ## Supported Pterodactyl Versions
 
