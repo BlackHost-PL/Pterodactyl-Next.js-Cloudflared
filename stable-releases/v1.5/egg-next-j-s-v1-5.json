@@ -1,0 +1,165 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2025-01-15T16:06:48+01:00",
+    "name": "Next JS v1.5",
+    "author": "ricardoneud2007@gmail.com",
+    "description": "Host a Next.js application easily",
+    "features": null,
+    "docker_images": {
+        "Nextjs 21": "ghcr.io\/dev-ricardoneud\/pterodactyl-nextjs:nextjs_21",
+        "Nextjs 20": "ghcr.io\/dev-ricardoneud\/pterodactyl-nextjs:nextjs_20",
+        "Nextjs 19": "ghcr.io\/dev-ricardoneud\/pterodactyl-nextjs:nextjs_19",
+        "Nextjs 18": "ghcr.io\/dev-ricardoneud\/pterodactyl-nextjs:nextjs_18"
+    },
+    "file_denylist": [],
+    "startup": "if [ \"${STARTUP_STATUS}\" == \"default\" ]; then cd ${BUILD_DIR} && mkdir -p ${BUILD_DIR}\/node_modules && npm config set prefix ${BUILD_DIR}\/node_modules && if ! command -v npm &> \/dev\/null; then npm install -g npm; fi && if ! command -v yarn &> \/dev\/null; then npm install -g yarn; fi && export PATH=${BUILD_DIR}\/node_modules:$PATH && if [ \"${AUTO_UPDATE}\" == \"1\" ] && [ ! -d \".git\" ]; then if [ \"${LOGS_STATUS}\" == \"1\" ]; then echo \"Auto-update is enabled. Pulling latest files from GitHub...\" | tee -a logs\/update.log; else echo \"Auto-update is enabled. Pulling latest files from GitHub...\"; fi; if [ -n \"${USERNAME}\" ] && [ -n \"${ACCESS_TOKEN}\" ]; then git config --global credential.helper store && echo \"https:\/\/${USERNAME}:${ACCESS_TOKEN}@$(echo ${GITHUB_URL} | sed -e 's|https:\/\/||')\" > ~\/.git-credentials; fi; git init && git remote add origin ${GITHUB_URL} && git fetch origin ${GIT_BRANCH} && git reset --hard origin\/${GIT_BRANCH}; fi && if [ -f \"package.json\" ]; then if [ \"${PROJECT_RUN}\" == \"yarn\" ]; then yarn; else npm install; fi; else echo \"No package.json found. Skipping package manager.\"; fi && if [ -n \"${NODE_PACKAGES}\" ]; then MODULES_LIST=$(echo ${NODE_PACKAGES} | tr ',' ' ') && if [ \"${MODULES_UNINSTALL}\" == \"1\" ]; then if [ \"${PROJECT_RUN}\" == \"yarn\" ]; then yarn remove ${MODULES_LIST}; else npm uninstall ${MODULES_LIST}; fi && echo \"Modules uninstalled successfully\"; else if [ \"${PROJECT_RUN}\" == \"yarn\" ]; then yarn add ${MODULES_LIST}; else npm install ${MODULES_LIST}; fi && echo \"Modules installed successfully\"; fi; fi && if [ \"${LOGS_STATUS}\" == \"1\" ]; then mkdir -p logs && echo \"Logs directory created\"; fi && if [ \"${NODE_RUN_ENV}\" == \"dev\" ]; then if [ \"${LOGS_STATUS}\" == \"1\" ]; then if [ \"${PROJECT_RUN}\" == \"yarn\" ]; then yarn dev -p ${NEXT_SERVER_PORT} -H ${NEXT_HOST} | tee -a logs\/next_dev.log; else npm run dev -- -p ${NEXT_SERVER_PORT} -H ${NEXT_HOST} | tee -a logs\/next_dev.log; fi; else if [ \"${PROJECT_RUN}\" == \"yarn\" ]; then yarn dev -p ${NEXT_SERVER_PORT} -H ${NEXT_HOST}; else npm run dev -- -p ${NEXT_SERVER_PORT} -H ${NEXT_HOST}; fi; fi; else if [ \"${LOGS_STATUS}\" == \"1\" ]; then if [ \"${PROJECT_RUN}\" == \"yarn\" ]; then yarn build && yarn start -p ${NEXT_SERVER_PORT} -H ${NEXT_HOST} | tee -a logs\/next_start.log; else npm run build && npm run start -- -p ${NEXT_SERVER_PORT} -H ${NEXT_HOST} | tee -a logs\/next_start.log; fi; else if [ \"${PROJECT_RUN}\" == \"yarn\" ]; then yarn build && yarn start -p ${NEXT_SERVER_PORT} -H ${NEXT_HOST}; else npm run build && npm run start -- -p ${NEXT_SERVER_PORT} -H ${NEXT_HOST}; fi; fi; fi; elif [ \"${STARTUP_STATUS}\" == \"custom\" ]; then ${STARTUP_COMMAND}; fi",
+    "config": {
+        "files": "{}",
+        "startup": "{\r\n    \"done\": \"Compiled successfully\"\r\n}",
+        "logs": "{}",
+        "stop": "^^C"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#!\/bin\/bash\r\napk update\r\napk add --no-cache bash git\r\napk add --no-cache nodejs npm\r\ncd \/home\/container\r\nnpm install",
+            "container": "alpine:3.4",
+            "entrypoint": "ash"
+        }
+    },
+    "variables": [
+        {
+            "name": "Node ENV",
+            "description": "The environment in which the Next.js application runs (e.g. dev for development or production for production).",
+            "env_variable": "NODE_RUN_ENV",
+            "default_value": "dev",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|in:dev,production",
+            "field_type": "text"
+        },
+        {
+            "name": "Host Header",
+            "description": "Here you can put the host, normally always set to 0.0.0.0 to allow any host",
+            "env_variable": "NEXT_HOST",
+            "default_value": "0.0.0.0",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Server Port",
+            "description": "Here you can set the port on which your nextjs app can be reached",
+            "env_variable": "NEXT_SERVER_PORT",
+            "default_value": "3000",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|integer|min:1024|max:65535",
+            "field_type": "text"
+        },
+        {
+            "name": "Build Directory",
+            "description": "Here you can enter the path where your appaltion is located, this again involves moving folders to the root folder",
+            "env_variable": "BUILD_DIR",
+            "default_value": "\/home\/container",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "GITHUB URL",
+            "description": "Repository to clone (https:\/\/github.com\/user_name\/repo_name)",
+            "env_variable": "GITHUB_URL",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "nullable|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Branch",
+            "description": "Which branch to install",
+            "env_variable": "GIT_BRANCH",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "nullable|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Auto Pull",
+            "description": "Pull from the repository on startup",
+            "env_variable": "AUTO_UPDATE",
+            "default_value": "0",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|boolean",
+            "field_type": "text"
+        },
+        {
+            "name": "Git Username",
+            "description": "Username used to auth with git",
+            "env_variable": "USERNAME",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "nullable|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Git Access Token",
+            "description": "Password used to auth with git (https:\/\/github.com\/settings\/tokens)",
+            "env_variable": "ACCESS_TOKEN",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "nullable|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Logs Status",
+            "description": "Toggle this switch to enable or disable logging",
+            "env_variable": "LOGS_STATUS",
+            "default_value": "0",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|boolean",
+            "field_type": "text"
+        },
+        {
+            "name": "Modules",
+            "description": "The Modules that need to be installed by NPM for your nextjs project are marked with ,",
+            "env_variable": "NODE_PACKAGES",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "nullable|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Modules Uninstall",
+            "description": "Switch this switch to choose whether you want to install or delete the modules. Normally this is the default value and installs them.",
+            "env_variable": "MODULES_UNINSTALL",
+            "default_value": "0",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|boolean",
+            "field_type": "text"
+        },
+        {
+            "name": "Project Run",
+            "description": "How the app should be run with NPM or YARN",
+            "env_variable": "PROJECT_RUN",
+            "default_value": "npm",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|in:npm,yarn",
+            "field_type": "text"
+        }
+    ]
+}
