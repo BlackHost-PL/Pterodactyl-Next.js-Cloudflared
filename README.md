@@ -104,3 +104,14 @@ Cloudflared is an easy-to-use tool for creating secure tunnels to your applicati
 ---
 
 **For more information or assistance, feel free to contact the egg developer!**
+
+## Authors
+
+- **Original script**: [Ricardo Neud](https://github.com/dev-ricardoneud)
+- **Modified script**: [HHakeRR785](https://github.com/HHakeRR785)
+
+## License
+
+[MIT License](https://choosealicense.com/licenses/mit/)
+
+Original repository: https://github.com/dev-ricardoneud/pterodactyl-next-js-egg
