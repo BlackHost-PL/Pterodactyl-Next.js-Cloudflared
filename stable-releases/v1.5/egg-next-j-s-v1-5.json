@@ -16,7 +16,7 @@
         "Nextjs 18": "ghcr.io\/dev-ricardoneud\/pterodactyl-nextjs:nextjs_18"
     },
     "file_denylist": [],
-    "startup": "cd ${BUILD_DIR} && if [ \"${AUTO_UPDATE}\" == \"1\" ]; then if [ \"${LOGS_STATUS}\" == \"1\" ]; then echo \"Auto-update is enabled. Pulling latest files from GitHub...\" | tee -a logs\/update.log; else echo \"Auto-update is enabled. Pulling latest files from GitHub...\"; fi; if [ -n \"${USERNAME}\" ] && [ -n \"${ACCESS_TOKEN}\" ]; then git config --global credential.helper store && echo \"https:\/\/${USERNAME}:${ACCESS_TOKEN}@$(echo ${GITHUB_URL} | sed -e 's|https:\/\/||')\" > ~\/.git-credentials; fi; git init; if ! git remote get-url origin &>\/dev\/null; then git remote add origin ${GITHUB_URL}; else git remote set-url origin ${GITHUB_URL}; fi; git fetch origin ${GIT_BRANCH} && git reset --hard origin\/${GIT_BRANCH}; fi && mkdir -p ${BUILD_DIR}\/node_modules && npm config set prefix ${BUILD_DIR}\/node_modules && if ! command -v npm &> \/dev\/null; then npm install -g npm; fi && if ! command -v yarn &> \/dev\/null; then npm install -g yarn; fi && export PATH=${BUILD_DIR}\/node_modules:$PATH && if [ -f \"package.json\" ]; then if [ \"${PROJECT_RUN}\" == \"yarn\" ]; then yarn; else npm install; fi; else echo \"No package.json found. Skipping package manager.\"; fi && if [ -n \"${NODE_PACKAGES}\" ]; then MODULES_LIST=$(echo ${NODE_PACKAGES} | tr ',' ' ') && if [ \"${MODULES_UNINSTALL}\" == \"1\" ]; then if [ \"${PROJECT_RUN}\" == \"yarn\" ]; then yarn remove ${MODULES_LIST}; else npm uninstall ${MODULES_LIST}; fi && echo \"Modules uninstalled successfully\"; else if [ \"${PROJECT_RUN}\" == \"yarn\" ]; then yarn add ${MODULES_LIST}; else npm install ${MODULES_LIST}; fi && echo \"Modules installed successfully\"; fi; fi && if [ \"${LOGS_STATUS}\" == \"1\" ]; then mkdir -p logs && echo \"Logs directory created\"; fi && if [ \"${NODE_RUN_ENV}\" == \"dev\" ]; then if [ \"${LOGS_STATUS}\" == \"1\" ]; then if [ \"${PROJECT_RUN}\" == \"yarn\" ]; then yarn dev -p ${NEXT_SERVER_PORT} -H ${NEXT_HOST} | tee -a logs\/next_dev.log; else npm run dev -- -p ${NEXT_SERVER_PORT} -H ${NEXT_HOST} | tee -a logs\/next_dev.log; fi; else if [ \"${PROJECT_RUN}\" == \"yarn\" ]; then yarn dev -p ${NEXT_SERVER_PORT} -H ${NEXT_HOST}; else npm run dev -- -p ${NEXT_SERVER_PORT} -H ${NEXT_HOST}; fi; fi; else if [ \"${LOGS_STATUS}\" == \"1\" ]; then if [ \"${PROJECT_RUN}\" == \"yarn\" ]; then yarn build && yarn start -p ${NEXT_SERVER_PORT} -H ${NEXT_HOST} | tee -a logs\/next_start.log; else npm run build && npm run start -- -p ${NEXT_SERVER_PORT} -H ${NEXT_HOST} | tee -a logs\/next_start.log; fi; else if [ \"${PROJECT_RUN}\" == \"yarn\" ]; then yarn build && yarn start -p ${NEXT_SERVER_PORT} -H ${NEXT_HOST}; else npm run build && npm run start -- -p ${NEXT_SERVER_PORT} -H ${NEXT_HOST}; fi; fi; fi;",
+    "startup": "cd ${BUILD_DIR} && if [ \"${AUTO_UPDATE}\" == \"1\" ]; then if [ \"${LOGS_STATUS}\" == \"1\" ]; then echo \"Auto-update is enabled. Pulling latest files from GitHub...\" | tee -a logs\/update.log; else echo \"Auto-update is enabled. Pulling latest files from GitHub...\"; fi; if [ -n \"${USERNAME}\" ] && [ -n \"${ACCESS_TOKEN}\" ]; then git config --global credential.helper store && echo \"https:\/\/${USERNAME}:${ACCESS_TOKEN}@$(echo ${GITHUB_URL} | sed -e 's|https:\/\/||')\" > ~\/.git-credentials; fi; git init; if ! git remote get-url origin &>\/dev\/null; then git remote add origin ${GITHUB_URL}; else git remote set-url origin ${GITHUB_URL}; fi; git fetch origin ${GIT_BRANCH} && git reset --hard origin\/${GIT_BRANCH}; fi && if [ \"${CLOUDFLARED_STATUS}\" = \"1\" ]; then echo \"${CLOUDFLARED_TOKEN}\" > \"cloudflared_token.txt\"; ${STARTUP_COMMAND_CLOUDFLARED}; fi && mkdir -p ${BUILD_DIR}\/node_modules && npm config set prefix ${BUILD_DIR}\/node_modules && if ! command -v npm &> \/dev\/null; then npm install -g npm; fi && if ! command -v yarn &> \/dev\/null; then npm install -g yarn; fi && export PATH=${BUILD_DIR}\/node_modules:$PATH && if [ -f \"package.json\" ]; then if [ \"${PROJECT_RUN}\" == \"yarn\" ]; then yarn; else npm install; fi; else echo \"No package.json found. Skipping package manager.\"; fi && if [ -n \"${NODE_PACKAGES}\" ]; then MODULES_LIST=$(echo ${NODE_PACKAGES} | tr ',' ' ') && if [ \"${MODULES_UNINSTALL}\" == \"1\" ]; then if [ \"${PROJECT_RUN}\" == \"yarn\" ]; then yarn remove ${MODULES_LIST}; else npm uninstall ${MODULES_LIST}; fi && echo \"Modules uninstalled successfully\"; else if [ \"${PROJECT_RUN}\" == \"yarn\" ]; then yarn add ${MODULES_LIST}; else npm install ${MODULES_LIST}; fi && echo \"Modules installed successfully\"; fi; fi && if [ \"${LOGS_STATUS}\" == \"1\" ]; then mkdir -p logs && echo \"Logs directory created\"; fi && if [ \"${NODE_RUN_ENV}\" == \"dev\" ]; then if [ \"${LOGS_STATUS}\" == \"1\" ]; then if [ \"${PROJECT_RUN}\" == \"yarn\" ]; then yarn dev -p ${NEXT_SERVER_PORT} -H ${NEXT_HOST} | tee -a logs\/next_dev.log; else npm run dev -- -p ${NEXT_SERVER_PORT} -H ${NEXT_HOST} | tee -a logs\/next_dev.log; fi; else if [ \"${PROJECT_RUN}\" == \"yarn\" ]; then yarn dev -p ${NEXT_SERVER_PORT} -H ${NEXT_HOST}; else npm run dev -- -p ${NEXT_SERVER_PORT} -H ${NEXT_HOST}; fi; fi; else if [ \"${LOGS_STATUS}\" == \"1\" ]; then if [ \"${PROJECT_RUN}\" == \"yarn\" ]; then yarn build && yarn start -p ${NEXT_SERVER_PORT} -H ${NEXT_HOST} | tee -a logs\/next_start.log; else npm run build && npm run start -- -p ${NEXT_SERVER_PORT} -H ${NEXT_HOST} | tee -a logs\/next_start.log; fi; else if [ \"${PROJECT_RUN}\" == \"yarn\" ]; then yarn build && yarn start -p ${NEXT_SERVER_PORT} -H ${NEXT_HOST}; else npm run build && npm run start -- -p ${NEXT_SERVER_PORT} -H ${NEXT_HOST}; fi; fi; fi;",
     "config": {
         "files": "{}",
         "startup": "{\r\n    \"done\": \"Compiled successfully\"\r\n}",
@@ -25,7 +25,7 @@
     },
     "scripts": {
         "installation": {
-            "script": "#!\/bin\/bash\r\napk update\r\napk add --no-cache bash git\r\napk add --no-cache nodejs npm\r\ncd \/home\/container\r\nnpm install",
+            "script": "#!\/bin\/bash\r\napk update\r\napk add bash git git\r\napk add nodejs npm\r\n\r\n# Create necessary folders\r\necho -e \"[SETUP] Create folders\"\r\nmkdir -p logs tmp\r\n\r\n# Clone the repository into a temporary directory and extract it\r\necho \"[Git] Cloning default repository 'https:\/\/github.com\/BlackHost-PL\/Cloudflared' into temporary directory.\"\r\ngit clone https:\/\/github.com\/BlackHost-PL\/Cloudflared \/mnt\/server\/gtemp > \/dev\/null 2>&1 && echo \"[Git] Repository cloned successfully.\" || { echo \"[Git] Error: Default repository clone failed.\"; exit 21; }\r\ncp \/mnt\/server\/gtemp\/cloudflared.sh \/mnt\/server || { echo \"[Git] Error: Copying 'cloudflared.sh' file failed.\"; exit 22; }\r\ncp \/mnt\/server\/gtemp\/LICENSE \/mnt\/server || { echo \"[Git] Error: Copying 'LICENSE' file failed.\"; exit 22; }\r\nchmod +x \/mnt\/server\/cloudflared.sh\r\n\r\n# Remove the temporary cloned repository\r\nrm -rf \/mnt\/server\/gtemp",
             "container": "alpine:3.4",
             "entrypoint": "ash"
         }
@@ -159,6 +159,36 @@
             "user_viewable": true,
             "user_editable": true,
             "rules": "required|string|in:npm,yarn",
+            "field_type": "text"
+        },
+        {
+            "name": "Cloudflare Tunnel",
+            "description": "Activate or deactivate cloudflared - https:\/\/developers.cloudflare.com\/cloudflare-one\/connections\/connect-networks\/",
+            "env_variable": "CLOUDFLARED_STATUS",
+            "default_value": "0",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|boolean",
+            "field_type": "text"
+        },
+        {
+            "name": "Cloudflare Tunnel token",
+            "description": "The authentication token required to connect to Cloudflare's Tunnel service typically starts with ey....",
+            "env_variable": "CLOUDFLARED_TOKEN",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "nullable|string|regex:\/^[A-Za-z0-9_-]+$\/",
+            "field_type": "text"
+        },
+        {
+            "name": "Startup command Cloudflared",
+            "description": "The startup file for Cloudflared.",
+            "env_variable": "STARTUP_COMMAND_CLOUDFLARED",
+            "default_value": ".\/cloudflared.sh",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string",
             "field_type": "text"
         }
     ]

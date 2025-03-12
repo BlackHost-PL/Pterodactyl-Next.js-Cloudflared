@@ -7,6 +7,7 @@ Host your **Next.js** application in no time with this Pterodactyl panel egg. Th
 - **Easy installation**: Install your Next.js app directly via the Pterodactyl panel.
 - **No GitHub required**: Manage your files directly via the panel.
 - **Port configuration**: Change the port your application runs on with ease.
+- **Cloudflared Integration**: Easily set up Cloudflared tunnel to securely expose your Next.js app over the internet.
 
 ## Emoji Legend
 
@@ -75,6 +76,9 @@ Host your **Next.js** application in no time with this Pterodactyl panel egg. Th
 5. **Start the server**:
    - Start the server from the Pterodactyl panel. Your application will now be hosted without needing extra dependencies like GitHub.
 
+6. **Cloudflared Tunnel Configuration**:
+   - For added security, this egg allows you to configure a **Cloudflared** tunnel to expose your application to the internet. Set the `CLOUDFLARED_TOKEN` variable in the environment settings to connect your server to Cloudflare and create a secure tunnel to your app. This eliminates the need to open ports on your firewall or expose your server directly to the internet.
+
 ### Port Configuration
 
 You can change the port your application runs on by modifying the `NEXT_APP_PORT` variable. This can easily be done via the Pterodactyl panel under the "Environment" section of the server configuration.
@@ -92,6 +96,10 @@ Yes, you can set the desired version of Node.js via the Pterodactyl panel. The e
 ### Do I need extra configurations for production servers?
 
 Yes, you should set the appropriate environment variables for production environments, such as `NODE_ENV` and `NEXT_PUBLIC_*` variables.
+
+### How does Cloudflared work with this egg?
+
+Cloudflared is an easy-to-use tool for creating secure tunnels to your application. Once configured, it will expose your Next.js app securely to the internet without the need for manual port forwarding. This is especially useful if you're deploying in environments where opening ports may not be feasible.
 
 ---
 
